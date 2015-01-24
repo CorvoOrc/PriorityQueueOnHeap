@@ -6,7 +6,6 @@ Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
 */
 
 #include <iostream>
-#include <exception>
 //#include <conio.h>
 #include "HeapSort.h"
 #include "PriorityQueue.h"

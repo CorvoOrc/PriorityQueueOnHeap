@@ -6,38 +6,20 @@ Worst space complexity: O(1):in-place algorithm
 */
 #pragma once
 #include "Heap.h"
-#include <exception>
+//#include <exception>
+//#include <stdexcept>
 
-template <class T> class HeapSort
+template <class T> 
+class HeapSort
 {
 public:
-	HeapSort(const Heap <T> *heap_) {
-		try{
-			this->heap = new Heap<T>(*heap_);
-		}
-		catch (std::runtime_error run_err){
-			throw std::runtime_error(run_err.what());
-		}
-	}
-	~HeapSort(){
-		delete heap;
-	}
+	//HeapSort();
+	HeapSort(const Heap <T> *heap_);
+	~HeapSort();
 
-	void sort() {
-		//heap->build_heap(a);
-		for (uint i = heap->get_lenght(); i >= heap->INDEX_ROOT + 1; --i) {
-			uint index_root = heap->INDEX_ROOT;
-			//std::swap(heap->store[heap->INDEX_ROOT], heap->store[i]);
-			heap->swap(index_root, i);
-			heap->decrease_size();
+	void sort();
 
-			heap->heapify(index_root);
-		}
-	}
-
-	const T *get_data() {
-		return this->heap->get_data();
-	}
+	const T *get_data();
 
 private:
 	Heap <T> *heap;

@@ -6,6 +6,7 @@ heapify - O(lgn) = O(h)
 build_heap - O(n*lgn)
 */
 #pragma once
+#include <stdexcept>
 
 typedef unsigned int uint;
 
@@ -20,92 +21,29 @@ class Heap
 public:
 	//template<typename T>
 	//friend class Priority;
-	//Heap();
-	Heap(const uint &lenght_, const T *data_, const Type &type_){
-		this->heap_size = lenght_;
-		this->lenght = lenght_;
+	//Heap(const Heap<T> &);
+	Heap(const uint &lenght_, const T *data_, const Type &type_); 
+	~Heap();
 
-		try{
-			this->data = new T[lenght];
-		}
-		catch(std::exception e){
-			throw std::runtime_error("new data not allocated");
-		}
+	uint parent(const uint &i);
+	uint left(const uint &i);
+	uint right(const uint &i);
 
-		try{
-			memcpy(this->data, data_, sizeof(T) * (this->lenght + INDEX_ROOT));
-		}
-		catch (std::exception e){
-			throw std::runtime_error("memory not allocated");
-		}
-
-		this->coef = type_ == nondecreasing ? -1 : 1;
-
-		build_heap();
-	}
-	~Heap(){
-		delete[] data;
-	}
-
-	uint parent(const uint &i){
-		return i >> 1;
-	}
-	uint left(const uint &i){
-		return i << 1;
-	}
-	uint right(const uint &i){
-		return (i << 1) + 1;
-	}
-
-	void heapify(const uint &i){
-		uint l = left(i);
-		uint r = right(i);
-
-		uint largest = i;
-
-		if (l <= heap_size && data[l]*coef > data[i]*coef)
-			largest = l;
-		if (r <= heap_size && data[r]*coef > data[largest]*coef)
-			largest = r;
-
-		if (largest != i) {
-			std::swap(data[i], data[largest]);
-			heapify(largest);
-		}
-	}
+	void heapify(const uint &i);
 
 protected:
-	void build_heap(){
-		for (uint i = lenght / 2; i >= INDEX_ROOT; --i)
-			heapify(i);
-	}
+	void build_heap();
 
 public:
-	void decrease_size(){
-		--this->heap_size;
-	}
-	void increase_size(){
-		++this->heap_size;
-	}
+	void decrease_size();
+	void increase_size();
 
-	void swap(const uint &i, const uint &j){
-		T tmp = this->data[i];
-		this->data[i] = this->data[j];
-		this->data[j] = tmp;
-	}
+	void swap(const uint &i, const uint &j);
 
-	uint get_coef(){
-		return this->coef;
-	}
-	uint get_size(){
-		return this->heap_size;
-	}
-	uint get_lenght(){
-		return this->lenght;
-	}
-	const T *get_data(){
-		return this->data;
-	}
+	uint get_coef();
+	uint get_size();
+	uint get_lenght();
+	const T *get_data();
 
 public:
 	const uint MIN_HEAP_SIZE = 1;
